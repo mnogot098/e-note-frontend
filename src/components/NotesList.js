@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
 
-function NotesList() {
+function NotesList(noteSearched) {
 
   const [notes,setNotes] = useState([]);
 
@@ -27,7 +27,7 @@ function NotesList() {
     fetch(`http://localhost:8000/api/notes/${id}`, requestOptions)
       .then(response => response.json());
       setShow(false);
-      getNotes();
+      getNotes()
   }
 
   useEffect(() => {
@@ -39,7 +39,9 @@ function NotesList() {
     <div className='notes-list'>
 
       {
-        notes.map((note) => {
+        notes
+        .filter((note)=> note.title.includes(noteSearched.noteSearched))
+        .map((note) => {
           return (
              <div className='note'>
               <Modal

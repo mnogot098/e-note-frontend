@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Modal from 'react-bootstrap/Modal';
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 
 
@@ -16,6 +16,7 @@ function App() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [searchNote,setSearchNote] = useState('');
 
   const newNote = async (e) => {
     e.preventDefault();
@@ -36,9 +37,11 @@ function App() {
       <div className='header'>
         <InputGroup className="mb-3">
         <Form.Control
+          type="text"
           placeholder="Search note..."
           aria-label="note-search"
           aria-describedby="basic-addon2"
+          onChange = {(e) => {setSearchNote(e.target.value)}}
         />
         <Button variant="outline-warning" id="button-addon2">
           Search
@@ -46,7 +49,7 @@ function App() {
       </InputGroup>
       </div>
       <Button className="add-note" variant="outline-success" onClick={handleShow}>+New</Button>
-      <NotesList/>
+      <NotesList noteSearched = {searchNote}/>
       <Modal
         show={show}
         onHide={handleClose}
